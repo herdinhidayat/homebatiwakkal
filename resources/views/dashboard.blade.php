@@ -24,7 +24,8 @@
                                 <strong>Keterangan :</strong> <br>
                                 {{ $jasa->keterangan }}
                             </p>
-                            <a href="#" class="btn btn-primary mt-4"><i class="fa fa-shopping-cart"></i> Pesan</a>
+                            <a href="{{ url('pesan') }}/{{ $jasa->id }}" class="btn btn-primary mt-4"><i
+                                    class="fa fa-shopping-cart"></i> Pesan</a>
                         </div>
                     </div>
                 </div>

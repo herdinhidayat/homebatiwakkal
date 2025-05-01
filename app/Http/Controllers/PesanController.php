@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Jasa;
+use App\Models\Jasa;
 use Illuminate\Http\Request;
 
 class PesanController extends Controller

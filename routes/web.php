@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PesanController;
 use App\Http\Controllers\ProfileController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,4 @@ require __DIR__ . '/auth.php';
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
-Route::get('pesan/{id}', 'PesanController@index')->middleware('auth');
+Route::get('pesan/{id}', [PesanController::class, 'index'])->name('pesan.index')->middleware('auth');
