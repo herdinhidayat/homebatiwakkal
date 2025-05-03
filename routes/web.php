@@ -25,3 +25,4 @@ require __DIR__ . '/auth.php';
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 Route::get('pesan/{id}', [PesanController::class, 'index'])->name('pesan.index')->middleware('auth');
+Route::post('pesan/{id}', [PesanController::class, 'pesan']);

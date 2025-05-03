@@ -18,6 +18,7 @@
                             <h5 class="card-title">{{ $jasa->nama_jasa }}</h5>
                             <p class="card-text mb-4">
                                 <strong>Harga. </strong>Rp. {{ number_format($jasa->harga) }}<br>
+                                <strong>Jumlah Booking / Perhari </strong>: {{ number_format($jasa->jumlahboking) }}<br>
                                 <strong>Status: </strong>{{ $jasa->status }}
                                 <hr>
                                 <br>

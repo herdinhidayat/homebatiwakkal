@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Jasa extends Model
+class Pesanan extends Model
 {
     public function pesanan_detail()
     {

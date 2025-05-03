@@ -35,31 +35,31 @@
                                             <td>{{ $jasa->status }}</td>
                                         </tr>
                                         <tr>
+                                            <td>Jumlah Booking / Perhari</td>
+                                            <td>:</td>
+                                            <td>{{ $jasa->jumlahboking }}</td>
+                                        </tr>
+                                        <tr>
                                             <td>Keterangan</td>
                                             <td>:</td>
                                             <td>{{ $jasa->keterangan }}</td>
                                         </tr>
-                                        <form action="" method="post">
-                                            <tr>
-                                                <td>Jumlah Pesan <br>
-                                                    <h4>(Contoh berapa ac/sofa/kendaraan yang dicuci jika 1 ditulis 1)
-                                                    </h4>
-                                                </td>
-                                                <td>:</td>
-                                                <td>
+                                        <tr>
+                                            <td>Jumlah Pesan <br>
+                                                <h4>(Contoh berapa ac/sofa/kendaraan yang dicuci jika 1 ditulis 1)
+                                                </h4>
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <form action="{{ url('pesan') }}/{{ $jasa->id }}" method="post">
+                                                    @csrf
                                                     <input type="text" name="jumlah_pesan" class="form-control"
                                                         required="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    <button type="submit" class="btn btn-primary"><i
+                                                    <button type="submit" class="btn btn-primary mt-2"><i
                                                             class="fa fa-shopping-cart"></i> Masukkan Keranjang</button>
-                                                </td>
-                                            </tr>
-                                        </form>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
