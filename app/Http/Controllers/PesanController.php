@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Jasa;
 use App\Models\Pesanan;
 use App\Models\PesananDetail;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
+
 
 class PesanController extends Controller
 {
@@ -66,7 +68,29 @@ class PesanController extends Controller
         $pesanan->jumlah_harga = $pesanan->jumlah_harga + $jasa->harga * $request->jumlah_pesan;
         $pesanan->update();
 
-
+        Alert::success('Berhasil', 'Kami akan kerjakan!');
         return redirect('dashboard');
+    }
+
+    public function check_out()
+    {
+        $pesanan = Pesanan::where('user_id', Auth::user()->id)->where('status', 0)->first();
+        $pesanan_details = PesananDetail::where('pesanan_id', $pesanan->id)->get();
+
+        return view('pesan.check_out', compact('pesanan', 'pesanan_details'));
+    }
+
+    public function delete($id)
+    {
+        $pesanan_detail = PesananDetail::where('id', $id)->first();
+
+        $pesanan = Pesanan::where('id', $pesanan_detail->pesanan_id)->first();
+        $pesanan->jumlah_harga = $pesanan->jumlah_harga - $pesanan_detail->jumlah_harga;
+        $pesanan->update();
+
+        $pesanan_detail->delete();
+
+        Alert::error('Pesanan Sukses Dihapus', 'Success');
+        return redirect('check_out');
     }
 }

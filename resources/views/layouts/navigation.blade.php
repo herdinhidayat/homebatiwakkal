@@ -16,6 +16,23 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <?php
+                    $pesanan_utama = \App\Models\Pesanan::where('user_id', Auth::user()->id)
+                        ->where('status', 0)
+                        ->first();
+                    
+                    $notif = 0; // default 0
+                    
+                    if ($pesanan_utama) {
+                        $notif = \App\Models\PesananDetail::where('pesanan_id', $pesanan_utama->id)->count();
+                    }
+                    ?>
+                    <x-nav-link :href="route('pesan.check_out')" :active="request()->routeIs('pesan.check_out')">
+                        <i class="fa fa-shopping-cart"></i><span
+                            class="badge rounded-pill text-bg-danger">{{ $notif }}</span>
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -37,7 +54,9 @@
                         </button>
                     </x-slot>
 
+
                     <x-slot name="content">
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>

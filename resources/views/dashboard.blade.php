@@ -10,27 +10,31 @@
                 <img src="{{ url('images/homebatiwakkal.png') }}" class="rounded mx-auto d-block" width="700"
                     alt="">
             </div>
-            @foreach ($jasas as $jasa)
-                <div class="col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="{{ url('uploads') }}/{{ $jasa->fotojasa }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $jasa->nama_jasa }}</h5>
-                            <p class="card-text mb-4">
-                                <strong>Harga. </strong>Rp. {{ number_format($jasa->harga) }}<br>
-                                <strong>Jumlah Booking / Perhari </strong>: {{ number_format($jasa->jumlahboking) }}<br>
-                                <strong>Status: </strong>{{ $jasa->status }}
-                                <hr>
-                                <br>
-                                <strong>Keterangan :</strong> <br>
-                                {{ $jasa->keterangan }}
-                            </p>
-                            <a href="{{ url('pesan') }}/{{ $jasa->id }}" class="btn btn-primary mt-4"><i
-                                    class="fa fa-shopping-cart"></i> Pesan</a>
+            <div class="row justify-content-center">
+                @foreach ($jasas as $jasa)
+                    <div class="col-md-4 d-flex justify-content-center mb-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="{{ url('uploads') }}/{{ $jasa->fotojasa }}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $jasa->nama_jasa }}</h5>
+                                <p class="card-text mb-4">
+                                    <strong>Harga. </strong>Rp. {{ number_format($jasa->harga) }}<br>
+                                    <strong>Jumlah Booking / </strong> Perhari :
+                                    {{ number_format($jasa->jumlahboking) }}<br>
+                                    <strong>Status: </strong>{{ $jasa->status }}
+                                    <hr>
+                                    <br>
+                                    <strong>Keterangan :</strong> <br>
+                                    {{ $jasa->keterangan }}
+                                </p>
+                                <a href="{{ url('pesan') }}/{{ $jasa->id }}" class="btn btn-primary mt-4"><i
+                                        class="fa fa-shopping-cart"></i> Pesan</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
     </div>
+
 </x-app-layout>

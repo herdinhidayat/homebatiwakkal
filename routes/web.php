@@ -26,3 +26,6 @@ Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 Route::get('pesan/{id}', [PesanController::class, 'index'])->name('pesan.index')->middleware('auth');
 Route::post('pesan/{id}', [PesanController::class, 'pesan']);
+Route::get('check_out', [PesanController::class, 'check_out'])->name('pesan.check_out');
+Route::delete('check-out/{id}', [PesanController::class, 'delete']);
+Route::get('konfirmasi-check-out', [PesanController::class, 'konfirmasi']);
