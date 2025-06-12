@@ -24,13 +24,15 @@
                     
                     $notif = 0; // default 0
                     
-                    if ($pesanan_utama) {
+                    if (!empty($pesanan_utama)) {
                         $notif = \App\Models\PesananDetail::where('pesanan_id', $pesanan_utama->id)->count();
                     }
                     ?>
                     <x-nav-link :href="route('pesan.check_out')" :active="request()->routeIs('pesan.check_out')">
-                        <i class="fa fa-shopping-cart"></i><span
-                            class="badge rounded-pill text-bg-danger">{{ $notif }}</span>
+                        <i class="fa fa-shopping-cart"></i>
+                        @if (!empty($notif))
+                            <span class="badge rounded-pill text-bg-danger">{{ $notif }}</span>
+                        @endif
                     </x-nav-link>
                 </div>
             </div>
@@ -60,6 +62,15 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('profile.status')">
+                            {{ __('Status') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('history.index')">
+                            {{ __('Riwayat Pemesanan') }}
+                        </x-dropdown-link>
+
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">

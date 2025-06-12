@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jasa;
 use App\Models\Pesanan;
+use App\Models\User;
 use App\Models\PesananDetail;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -39,6 +40,7 @@ class PesanController extends Controller
             $pesanan->tanggal = $tanggal;
             $pesanan->status = 0;
             $pesanan->jumlah_harga = 0;
+            $pesanan->kode = mt_rand(100, 999);
             $pesanan->save();
         }
 
@@ -75,8 +77,12 @@ class PesanController extends Controller
     public function check_out()
     {
         $pesanan = Pesanan::where('user_id', Auth::user()->id)->where('status', 0)->first();
-        $pesanan_details = PesananDetail::where('pesanan_id', $pesanan->id)->get();
 
+        $pesanan_details = []; // default-nya array kosong
+
+        if (!empty($pesanan)) {
+            $pesanan_details = PesananDetail::where('pesanan_id', $pesanan->id)->get();
+        }
         return view('pesan.check_out', compact('pesanan', 'pesanan_details'));
     }
 
@@ -90,7 +96,36 @@ class PesanController extends Controller
 
         $pesanan_detail->delete();
 
-        Alert::error('Pesanan Sukses Dihapus', 'Success');
+        Alert::success('Pesanan Sukses Dihapus', 'Success');
+        return redirect('check_out');
+    }
+
+    public function konfirmasi()
+    {
+        $user = User::where('id', Auth::user()->id)->first();
+
+        if (empty($user->alamat)) {
+            Alert::error('Identitasi Harap dilengkapi', 'Error');
+            return redirect('profilestatus');
+        }
+        if (empty($user->nohp)) {
+            Alert::error('Identitasi Harap dilengkapi', 'Error');
+            return redirect('profilestatus');
+        }
+
+        $pesanan = Pesanan::where('user_id', Auth::user()->id)->where('status', 0)->first();
+        $pesanan_id = $pesanan->id;
+        $pesanan->status = 1;
+        $pesanan->update();
+
+        $pesanan_details = PesananDetail::where('pesanan_id', $pesanan_id)->get();
+        foreach ($pesanan_details as $pesanan_detail) {
+            $jasa = Jasa::where('id', $pesanan_detail->jasa_id)->first();
+            $jasa->jumlahboking = $jasa->jumlahboking - $pesanan_detail->jumlah;
+            $jasa->update();
+        }
+
+        alert::success('Pesanan Sukses Check Out', 'Success');
         return redirect('check_out');
     }
 }
